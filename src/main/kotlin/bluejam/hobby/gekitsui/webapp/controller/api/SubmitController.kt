@@ -36,12 +36,13 @@ class SubmitController(
             throw Exception()
         }
 
-        val status = A_PLUS_B_MOD_SUITE.run(submissionPayload.testcase)
+        val testcase = submissionPayload.testcase.replace("\r\n", "\n")
+        val status = A_PLUS_B_MOD_SUITE.run(testcase)
 
         val submission = submissionRepository.save(Submission(
                 user,
                 problem,
-                submissionPayload.testcase,
+                testcase,
                 status
         ))
 

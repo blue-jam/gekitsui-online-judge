@@ -18,7 +18,10 @@ class ProblemConfiguration {
 
         aPlusBMod.name = "aplusbmod"
         aPlusBMod.title = "A + B mod 10"
-        aPlusBMod.statement = resourceLoader.getResource("classpath:problem/aplusbmod.md").file.readText()
+        val fileUrl = resourceLoader.getResource("classpath:problem/aplusbmod.md").url
+        aPlusBMod.statement = fileUrl.openStream().use {
+            String(it.readAllBytes())
+        }
 
         problemRepository.save(aPlusBMod)
     }

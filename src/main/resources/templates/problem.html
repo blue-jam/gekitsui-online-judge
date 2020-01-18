@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
+    <title th:text="${problem.title}"></title>
+</head>
+<body>
+<div id="problem-statement"></div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script th:inline="javascript">
+    document.getElementById('problem-statement').innerHTML
+        = marked([[${problem.statement}]])
+</script>
+<hr/>
+<form th:action="@{/api/submit}" method="post">
+    <input type="hidden" name="problemName" th:value="${problem.name}" />
+    <div>
+        <label for="testcase">テストケース</label>
+        <textarea name="testcase" id="testcase"></textarea>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

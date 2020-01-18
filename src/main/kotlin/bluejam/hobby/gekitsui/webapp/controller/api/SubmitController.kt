@@ -10,7 +10,7 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 
-data class Submission (val problemId: Int, val testcase: String)
+data class Submission (val problemName: String, val testcase: String)
 
 @Controller
 class SubmitController(val userRepository: UserRepository) {

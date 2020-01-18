@@ -7,16 +7,5 @@
 <body>
 <p th:text="'Hello: ' + ${username} + '!'"/>
 <p th:text="${message}"/>
-<form th:action="@{/api/submit}" method="post">
-    <div>
-        <label for="problemId">問題番号</label>
-        <input name="problemId" id="problemId" />
-    </div>
-    <div>
-        <label for="testcase">テストケース</label>
-        <textarea name="testcase" id="testcase"></textarea>
-    </div>
-    <button type="submit">Submit</button>
-</form>
 </body>
 </html>

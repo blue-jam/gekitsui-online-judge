@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
+</head>
+<body>
+<table>
+    <tr><th>問題</th><td><a th:text="${problem.title}" th:href="'/problem/' + ${problem.name}"></a></td></tr>
+    <tr><th>提出者</th><td th:text="${authorName}"></td></tr>
+    <tr><th>提出時間</th><td th:text="${#dates.format(submission.createdDate, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
+    <tr><th>ステータス</th><td th:text="${submission.status}"></td></tr>
+    <tr>
+        <th>テストケース</th>
+        <td><pre th:text="${submission.testcase}"></pre></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 @Controller
 class ProblemController(private val problemRepository: ProblemRepository) {
     @GetMapping("/problem/{problemName}")
-    fun get(
+    fun doGet(
             model: Model,
             @PathVariable problemName: String
     ): String {

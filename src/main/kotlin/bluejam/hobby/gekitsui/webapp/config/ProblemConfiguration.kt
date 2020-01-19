@@ -11,20 +11,29 @@ import java.io.InputStreamReader
 
 @Configuration
 class ProblemConfiguration {
+    fun createOrUpdateProblem(
+            problemName: String,
+            title: String,
+            resourceLoader: ResourceLoader,
+            problemRepository: ProblemRepository
+    ) {
+        val problem = problemRepository.findByName(problemName) ?: Problem(problemName, "", "")
+
+        problem.title = title
+        val fileUrl = resourceLoader.getResource("classpath:problem/${problemName}.md").url
+        problem.statement = BufferedReader(InputStreamReader(fileUrl.openStream())).use {
+            it.readText()
+        }
+
+        problemRepository.save(problem)
+    }
+
     @Bean
     fun problemInitializer(
             resourceLoader: ResourceLoader,
             problemRepository: ProblemRepository
     ) = ApplicationRunner {
-        val aPlusBMod = problemRepository.findByName("aplusbmod") ?: Problem("", "", "")
-
-        aPlusBMod.name = "aplusbmod"
-        aPlusBMod.title = "A + B mod 10"
-        val fileUrl = resourceLoader.getResource("classpath:problem/aplusbmod.md").url
-        aPlusBMod.statement = BufferedReader(InputStreamReader(fileUrl.openStream())).use {
-            it.readText()
-        }
-
-        problemRepository.save(aPlusBMod)
+        createOrUpdateProblem("aplusbmod", "A + B mod 10", resourceLoader, problemRepository)
+        createOrUpdateProblem("floyd_algorithm_warshall", "Floyd-Algorithm's warshall", resourceLoader, problemRepository)
     }
 }

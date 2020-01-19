@@ -34,8 +34,7 @@ private fun validate(inStream: InStream) {
 }
 
 val A_PLUS_B_MOD_SUITE = JudgeSuite(
-        "a_plus_b_mod",
-        "A + B mod 10",
+        "aplusbmod",
         ::aPlusBModCorrect,
         listOf(::aPlusBModWrong),
         ::validate

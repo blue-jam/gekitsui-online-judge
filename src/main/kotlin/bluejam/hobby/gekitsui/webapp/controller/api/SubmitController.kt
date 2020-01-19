@@ -1,5 +1,6 @@
 package bluejam.hobby.gekitsui.webapp.controller.api
 
+import bluejam.hobby.gekitsui.judge.problem.TEST_SUITE_MAP
 import bluejam.hobby.gekitsui.judge.problem.aplusbmod.A_PLUS_B_MOD_SUITE
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
 import bluejam.hobby.gekitsui.webapp.entity.Submission
@@ -36,8 +37,11 @@ class SubmitController(
             throw Exception()
         }
 
+        val judgeSuite = TEST_SUITE_MAP[problem.name]
+                ?: throw NotImplementedError("JudgeSuite of ${problem.name} is not implemented")
+
         val testcase = submissionPayload.testcase.replace("\r\n", "\n")
-        val status = A_PLUS_B_MOD_SUITE.run(testcase)
+        val status = judgeSuite.run(testcase)
 
         val submission = submissionRepository.save(Submission(
                 user,

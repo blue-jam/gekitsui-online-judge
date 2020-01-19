@@ -6,7 +6,6 @@ import java.util.*
 
 class JudgeSuite(
         val problemId: String,
-        val title: String,
         private val referenceSolution: (Scanner) -> String,
         private val wrongSolutions: List<(Scanner) -> String>,
         private val validator: (InStream) -> Unit

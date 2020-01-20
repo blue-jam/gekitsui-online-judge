@@ -1,7 +1,6 @@
 package bluejam.hobby.gekitsui.webapp.controller.api
 
 import bluejam.hobby.gekitsui.judge.problem.TEST_SUITE_MAP
-import bluejam.hobby.gekitsui.judge.problem.aplusbmod.A_PLUS_B_MOD_SUITE
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
 import bluejam.hobby.gekitsui.webapp.entity.Submission
 import bluejam.hobby.gekitsui.webapp.entity.SubmissionRepository

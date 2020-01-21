@@ -1,15 +1,15 @@
 package bluejam.hobby.gekitsui.webapp.controller.api
 
-import bluejam.hobby.gekitsui.judge.problem.TEST_SUITE_MAP
+import bluejam.hobby.gekitsui.judge.tool.JudgeStatus
+import bluejam.hobby.gekitsui.webapp.GekitsuiWebappApplication
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
 import bluejam.hobby.gekitsui.webapp.entity.Submission
 import bluejam.hobby.gekitsui.webapp.entity.SubmissionRepository
 import bluejam.hobby.gekitsui.webapp.repository.UserRepository
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
-import org.springframework.ui.Model
-import org.springframework.ui.set
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 
@@ -19,11 +19,11 @@ data class SubmissionPayload (val problemName: String, val testcase: String)
 class SubmitController(
         val userRepository: UserRepository,
         val problemRepository: ProblemRepository,
-        val submissionRepository: SubmissionRepository
+        val submissionRepository: SubmissionRepository,
+        val rabbitTemplate: RabbitTemplate
 ) {
     @PostMapping("/api/submit")
     fun post(
-            model: Model,
             @ModelAttribute submissionPayload: SubmissionPayload,
             @AuthenticationPrincipal oAuth2User: OAuth2User
     ): String {
@@ -36,11 +36,8 @@ class SubmitController(
             throw Exception()
         }
 
-        val judgeSuite = TEST_SUITE_MAP[problem.name]
-                ?: throw NotImplementedError("JudgeSuite of ${problem.name} is not implemented")
-
         val testcase = submissionPayload.testcase.replace("\r\n", "\n")
-        val status = judgeSuite.run(testcase)
+        val status = JudgeStatus.WAITING_JUDGE //judgeSuite.run(testcase)
 
         val submission = submissionRepository.save(Submission(
                 user,
@@ -48,9 +45,13 @@ class SubmitController(
                 testcase,
                 status
         ))
+        val submissionId = submission.id ?: throw Exception("Submission ID is null")
 
-        model["status"] = status.toString()
-        model["title"] = problem.title
+        rabbitTemplate.convertAndSend(
+                GekitsuiWebappApplication.TOPIC_EXCHANGE_NAME,
+                "",
+                submissionId.toString()
+        )
 
         return "redirect:/submission/${submission.id}"
     }

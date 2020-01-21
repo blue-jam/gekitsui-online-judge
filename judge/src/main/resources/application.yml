@@ -1,15 +1,8 @@
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: PUT_YOUR_CLIENT_ID
-            client-secret: PUT_YOUR_CLIENT_SECRET
   jpa:
     database: postgresql
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/gekitsui?sslmode=require}

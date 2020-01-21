@@ -1,2 +1,2 @@
 rootProject.name = "gekitsui-webapp"
-include("shared", "webapp")
+include("shared", "webapp", "judge")

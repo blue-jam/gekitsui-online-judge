@@ -17,3 +17,6 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
   rabbitmq:
     addresses: ${CLOUDAMQP_URL:amqp://guest:guest@localhost}
+gekitsui:
+  submission:
+    max-testcase-size: 2000

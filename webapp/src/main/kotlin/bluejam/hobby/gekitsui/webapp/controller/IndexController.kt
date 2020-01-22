@@ -8,18 +8,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
-import java.security.Principal
 
 @Controller
 class IndexController(val userRepository: UserRepository) {
-
-    @GetMapping("/user")
-    fun user(
-            principal: Principal
-    ): Principal {
-        return principal
-    }
-
     @GetMapping("/")
     fun index(
             model: Model,
@@ -37,10 +28,6 @@ class IndexController(val userRepository: UserRepository) {
 
             if (userRepository.findByGithubId(githubId) == null) {
                 userRepository.save(User(username, githubId))
-
-                model["message"] = "Nice to meet you"
-            } else {
-                model["message"] = "How are you?"
             }
         }
 

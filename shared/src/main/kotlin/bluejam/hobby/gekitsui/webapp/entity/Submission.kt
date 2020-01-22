@@ -2,7 +2,7 @@ package bluejam.hobby.gekitsui.webapp.entity
 
 import bluejam.hobby.gekitsui.judge.tool.JudgeStatus
 import org.hibernate.annotations.CreationTimestamp
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 import java.sql.Timestamp
 import javax.persistence.*
 
@@ -16,4 +16,4 @@ class Submission (
         @Id @GeneratedValue var id: Long? = null
 )
 
-interface SubmissionRepository: CrudRepository<Submission, Long>
+interface SubmissionRepository: JpaRepository<Submission, Long>

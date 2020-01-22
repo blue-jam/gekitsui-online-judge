@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation("org.springframework.data:spring-data-commons")
+    implementation("org.springframework.data:spring-data-jpa")
     implementation("org.hibernate:hibernate-core")
 }
 

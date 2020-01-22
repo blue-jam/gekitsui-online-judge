@@ -1,6 +1,8 @@
 package bluejam.hobby.gekitsui.webapp.controller
 
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
+import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Direction
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -16,5 +18,14 @@ class ProblemController(private val problemRepository: ProblemRepository) {
     ): String {
         model["problem"] = problemRepository.findByName(problemName) ?: throw Exception()
         return "problem"
+    }
+
+    @GetMapping("/problems")
+    fun doGetProblems(
+            model: Model
+    ): String {
+        model["problems"] = problemRepository.findAll(Sort.by(Direction.ASC, "id"))
+
+        return "problems"
     }
 }

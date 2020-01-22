@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
+    <title>問題一覧</title>
+</head>
+<body>
+<h2>問題一覧</h2>
+<ul th:each="problem : ${problems}">
+    <li>
+        <a th:href="'/problem/' + ${problem.name}" th:text="${problem.title}"></a>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package bluejam.hobby.gekitsui.webapp.entity
 
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 import javax.persistence.*
 
 @Entity
@@ -11,6 +11,6 @@ class Problem (
         @Id @GeneratedValue var id: Long? = null
 )
 
-interface ProblemRepository : CrudRepository<Problem, Long> {
+interface ProblemRepository : JpaRepository<Problem, Long> {
     fun findByName(name: String): Problem?
 }

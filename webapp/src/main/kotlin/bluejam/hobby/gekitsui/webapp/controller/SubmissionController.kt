@@ -1,6 +1,8 @@
 package bluejam.hobby.gekitsui.webapp.controller
 
 import bluejam.hobby.gekitsui.webapp.entity.SubmissionRepository
+import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Sort.Direction
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
@@ -23,5 +25,16 @@ class SubmissionController(private val submissionRepository: SubmissionRepositor
         model["status"] = submission.status
 
         return "submission"
+    }
+
+    @GetMapping("/submissions")
+    fun doGetSubmissions(
+            model: Model
+    ): String {
+        val submissions = submissionRepository.findAll(Sort.by(Direction.DESC, "id"))
+
+        model["submissions"] = submissions
+
+        return "submissions"
     }
 }

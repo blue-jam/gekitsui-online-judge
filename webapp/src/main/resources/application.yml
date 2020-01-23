@@ -18,5 +18,7 @@ spring:
   rabbitmq:
     addresses: ${CLOUDAMQP_URL:amqp://guest:guest@localhost}
 gekitsui:
+  cookie:
+    user-salt: salt
   submission:
     max-testcase-size: 2000

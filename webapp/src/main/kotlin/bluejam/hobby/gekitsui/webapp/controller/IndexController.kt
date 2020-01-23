@@ -1,7 +1,5 @@
 package bluejam.hobby.gekitsui.webapp.controller
 
-import bluejam.hobby.gekitsui.webapp.entity.User
-import bluejam.hobby.gekitsui.webapp.repository.UserRepository
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
@@ -10,7 +8,7 @@ import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
-class IndexController(val userRepository: UserRepository) {
+class IndexController {
     @GetMapping("/")
     fun index(
             model: Model,
@@ -22,13 +20,8 @@ class IndexController(val userRepository: UserRepository) {
         if (githubId == null || username == null) {
             // TODO: Throw exception
             model["username"] = "unknown user"
-            model["message"] = "Please try with a valid github account"
         } else {
             model["username"] = username
-
-            if (userRepository.findByGithubId(githubId) == null) {
-                userRepository.save(User(username, githubId))
-            }
         }
 
         return "index"

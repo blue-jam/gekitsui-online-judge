@@ -17,6 +17,21 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
   rabbitmq:
     addresses: ${CLOUDAMQP_URL:amqp://guest:guest@localhost}
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: buckets
+      filter-order: 10
+      url: /api/.*
+      rate-limits:
+        - expression: "@securityService.userid()"
+          bandwidths:
+          - capacity: 30
+            time: 1
+            unit: hours
 gekitsui:
   cookie:
     user-salt: salt

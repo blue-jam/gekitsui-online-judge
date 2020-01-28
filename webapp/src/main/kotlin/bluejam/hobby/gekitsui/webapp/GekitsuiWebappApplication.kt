@@ -6,9 +6,11 @@ import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.TopicExchange
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
+@EnableCaching
 class GekitsuiWebappApplication {
     companion object {
 		const val TOPIC_EXCHANGE_NAME = "gekitsui-judge-exchange"

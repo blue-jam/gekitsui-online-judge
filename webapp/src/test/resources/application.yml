@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: TEST_CLIENT_ID
+            client-secret: TEST_CLIENT_SECRET
+  jpa:
+    database: h2
+gekitsui:
+  cookie:
+    user-salt: salt

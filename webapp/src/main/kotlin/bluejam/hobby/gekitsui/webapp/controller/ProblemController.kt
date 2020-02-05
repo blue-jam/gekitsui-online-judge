@@ -16,7 +16,9 @@ class ProblemController(private val problemRepository: ProblemRepository) {
             model: Model,
             @PathVariable problemName: String
     ): String {
-        model["problem"] = problemRepository.findByName(problemName) ?: throw Exception()
+        model["problem"] = problemRepository.findByName(problemName) ?:
+                throw NotFoundException("There is no problem with name = $problemName")
+
         return "problem"
     }
 

@@ -2,6 +2,8 @@ package bluejam.hobby.gekitsui.webapp.controller.api
 
 import bluejam.hobby.gekitsui.judge.tool.JudgeStatus
 import bluejam.hobby.gekitsui.webapp.GekitsuiWebappApplication
+import bluejam.hobby.gekitsui.webapp.controller.BadRequestException
+import bluejam.hobby.gekitsui.webapp.controller.UnauthorizedException
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
 import bluejam.hobby.gekitsui.webapp.entity.Submission
 import bluejam.hobby.gekitsui.webapp.entity.SubmissionRepository
@@ -35,13 +37,13 @@ class SubmitController(
         val problem = problemRepository.findByName(submissionPayload.problemName)
 
         if (user == null || problem == null) {
-            throw Exception()
+            throw UnauthorizedException("The user with name = $githubId has not signed up")
         }
 
         val testcase = submissionPayload.testcase.replace("\r\n", "\n")
 
         if (testcase.length > maxTestcaseSize) {
-            throw Exception("Test case is too large.")
+            throw BadRequestException("Test case is too large.")
         }
 
         val submission = submissionRepository.save(Submission(

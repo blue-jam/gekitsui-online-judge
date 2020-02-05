@@ -16,7 +16,8 @@ class SubmissionController(private val submissionRepository: SubmissionRepositor
             model: Model,
             @PathVariable id: Long
     ): String {
-        val submission = submissionRepository.findById(id).get()
+        val submission = submissionRepository.findById(id)
+                .orElseThrow { NotFoundException("There is no submission with ID = $id") }
 
         model["testcase"] = submission.testcase
         model["authorName"] = submission.author.username

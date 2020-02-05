@@ -1,6 +1,6 @@
 # gekitsui-online-judge
 
-![Kotlin CI](https://github.com/blue-jam/gekitsui-online-judge/workflows/Kotlin%20CI/badge.svg)
+![build](https://github.com/blue-jam/gekitsui-online-judge/workflows/build/badge.svg)
 
 Online Judge to challenge/hack wrong solutions. The Online Judge is working at https://gekitsui-online-judge.herokuapp.com
 

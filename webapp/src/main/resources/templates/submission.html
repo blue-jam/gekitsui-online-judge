@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
-    <title th:text="'提出 #' + ${submission.id}"></title>
-</head>
-<body>
-<table>
-    <tr><th>問題</th><td><a th:text="${problem.title}" th:href="'/problem/' + ${problem.name}"></a></td></tr>
-    <tr><th>提出者</th><td th:text="${authorName}"></td></tr>
-    <tr><th>提出時間</th><td th:text="${#dates.format(submission.createdDate, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
-    <tr><th>ステータス</th><td th:text="${submission.status}"></td></tr>
-    <tr>
-        <th>テストケース</th>
-        <td><pre th:text="${submission.testcase}"></pre></td>
-    </tr>
-</table>
+<head th:replace="base :: common_header('提出 #' + ${submission.id})"></head>
+<body th:insert="base :: body(content=~{:: .content}, scripts=~{:: script})">
+<div class="content container">
+    <table class="table">
+        <tr>
+            <th>問題</th>
+            <td><a th:text="${problem.title}" th:href="'/problem/' + ${problem.name}"></a></td>
+        </tr>
+        <tr>
+            <th>提出者</th>
+            <td th:text="${authorName}"></td>
+        </tr>
+        <tr>
+            <th>提出時間</th>
+            <td th:text="${#dates.format(submission.createdDate, 'yyyy/MM/dd HH:mm:ss')}"></td>
+        </tr>
+        <tr>
+            <th>ステータス</th>
+            <td th:text="${submission.status}"></td>
+        </tr>
+        <tr>
+            <th>テストケース</th>
+            <td>
+                <pre th:text="${submission.testcase}"></pre>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html"/>
-    <title>提出一覧</title>
-</head>
-<body>
-<h2>提出一覧</h2>
-<table>
-    <tr>
-        <th>提出日時</th>
-        <th>問題</th>
-        <th>提出者</th>
-        <th>結果</th>
-        <th>詳細</th>
-    </tr>
-    <tr th:each="submission : ${submissions}">
-        <td th:text="${submission.createdDate}"></td>
-        <td><a th:href="'/problem/' + ${submission.problem.name}" th:text="${submission.problem.title}"></a></td>
-        <td th:text="${submission.author.username}"></td>
-        <td th:text="${submission.status}"></td>
-        <td><a th:href="'/submission/' + ${submission.id}">詳細</a></td>
-    </tr>
-</table>
+<head th:insert="base :: common_header('提出一覧')"></head>
+<body th:insert="base :: body(~{:: .content})">
+<div class="content container">
+    <h2>提出一覧</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>提出日時</th>
+            <th>問題</th>
+            <th>提出者</th>
+            <th>結果</th>
+            <th>詳細</th>
+        </tr>
+        </thead>
+        <tr th:each="submission : ${submissions}">
+            <td th:text="${submission.createdDate}"></td>
+            <td><a th:href="'/problem/' + ${submission.problem.name}" th:text="${submission.problem.title}"></a></td>
+            <td th:text="${submission.author.username}"></td>
+            <td th:text="${submission.status}"></td>
+            <td><a th:href="'/submission/' + ${submission.id}">詳細</a></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

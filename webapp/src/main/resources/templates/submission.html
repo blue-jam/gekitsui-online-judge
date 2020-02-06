@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base :: common_header('提出 #' + ${submission.id})"></head>
+<html xmlns:th="http://www.thymeleaf.org" th:with="page_title='提出 #' + ${submission.id}">
+<head th:replace="base :: common_header(title = ${page_title}, links = ~{:: link})">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+</head>
 <body th:insert="base :: body(content=~{:: .content}, scripts=~{:: script})">
 <div class="content container">
+    <h2>[[${page_title}]]</h2>
     <table class="table">
         <tr>
             <th>問題</th>
@@ -23,10 +26,12 @@
         <tr>
             <th>テストケース</th>
             <td>
-                <pre th:text="${submission.testcase}"></pre>
+                <pre><code class="plaintext" th:text="${submission.testcase}"></code></pre>
             </td>
         </tr>
     </table>
 </div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

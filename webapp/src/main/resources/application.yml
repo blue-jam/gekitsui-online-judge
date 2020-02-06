@@ -20,6 +20,8 @@ spring:
   cache:
     jcache:
       config: classpath:ehcache.xml
+  mvc:
+    static-path-pattern: /static/**
 bucket4j:
   enabled: true
   filters:

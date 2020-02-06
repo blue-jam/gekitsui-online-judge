@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="base :: common_header(${problem.title})"></head>
+<head th:replace="base :: common_header(title=${problem.title}, links=~{:: link})">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/default.min.css">
+</head>
 <body th:insert="base :: body(content=~{:: .content}, scripts=~{:: script})">
 <div class="content container">
     <h2 class="mb-4">[[${problem.title}]]</h2>
@@ -22,5 +24,7 @@
 </div>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>

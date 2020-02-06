@@ -3,6 +3,7 @@
 <head th:replace="base :: common_header(${problem.title})"></head>
 <body th:insert="base :: body(content=~{:: .content}, scripts=~{:: script})">
 <div class="content container">
+    <h2 class="mb-4">[[${problem.title}]]</h2>
     <div id="problem-statement"></div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script th:inline="javascript">

@@ -13,14 +13,15 @@
             = marked([[${problem.statement}]])
     </script>
     <hr/>
-    <form th:action="@{/api/submit}" method="post">
-        <input type="hidden" name="problemName" th:value="${problem.name}"/>
-        <div class="form-group">
-            <label for="testcase">テストケース</label>
-            <textarea class="form-control" name="testcase" id="testcase"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+        <form th:if="${username}" th:action="@{/api/submit}" method="post">
+            <input type="hidden" name="problemName" th:value="${problem.name}"/>
+            <div class="form-group">
+                <label for="testcase">テストケース</label>
+                <textarea class="form-control" name="testcase" id="testcase"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    <p th:unless="${username}">提出をするためには<a th:href="@{/login}">ログイン</a>してください。</p>
 </div>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>

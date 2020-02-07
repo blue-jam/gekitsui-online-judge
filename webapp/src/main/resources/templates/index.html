@@ -4,7 +4,7 @@
 <body th:insert="base :: body(~{ :: .content})">
 <div class="content container">
     <h2>撃墜オンラインジャッジ</h2>
-    <p th:text="'ようこそ、' + ${username} + 'さん!'"/>
+    <p th:if="${username}">ようこそ、[[${username}]]さん!</p>
     <p>問題のリストが<a href="/problems">問題一覧のページ</a>で見られますよ。</p>
     <p><a href="/submissions">提出一覧のページ</a>では、今までにあった提出を見ることができます。</p>
 </div>

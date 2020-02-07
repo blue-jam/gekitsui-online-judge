@@ -2,6 +2,7 @@ package bluejam.hobby.gekitsui.webapp.interceptor
 
 import bluejam.hobby.gekitsui.webapp.entity.User
 import bluejam.hobby.gekitsui.webapp.repository.UserRepository
+import bluejam.hobby.gekitsui.webapp.util.GitHubOAuthFields
 import org.apache.commons.codec.digest.DigestUtils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.context.SecurityContextHolder
@@ -27,10 +28,14 @@ class SignUpInterceptor(
             return true
         }
 
-        val principal = SecurityContextHolder.getContext().authentication?.principal ?: return true
-        val attributes = (principal as DefaultOAuth2User).attributes
-        val username = (attributes["login"] as String?) ?: return true
-        val githubId = (attributes["id"] as Int?) ?: return true
+        val principal = SecurityContextHolder.getContext().authentication?.principal
+
+        if (principal !is DefaultOAuth2User) {
+            return true
+        }
+
+        val username = GitHubOAuthFields.getUserName(principal) ?: return true
+        val githubId = GitHubOAuthFields.getUserId(principal) ?: return true
         val hashedUsername = DigestUtils.sha256Hex(username + hashSalt)
 
         if (request.cookies.find { it.name == COOKIE_NAME }?.value == hashedUsername) {

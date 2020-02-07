@@ -13,9 +13,11 @@ class ApplicationConfigurerAdapter : WebSecurityConfigurerAdapter() {
         }
 
         http.authorizeRequests {
-//            it.antMatchers("/").permitAll()
-//                    .anyRequest().authenticated()
-            it.anyRequest().authenticated()
+            it.antMatchers(
+                    "/", "/error", "/static/**",
+                    "/problems", "/problem/**", "/submissions", "/submission/**"
+            ).permitAll()
+                    .anyRequest().authenticated()
         }
                 .oauth2Login(Customizer.withDefaults())
     }

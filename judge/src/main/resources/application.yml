@@ -8,5 +8,7 @@ spring:
     url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/gekitsui?sslmode=require}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
   rabbitmq:
     addresses: ${CLOUDAMQP_URL:amqp://guest:guest@localhost}

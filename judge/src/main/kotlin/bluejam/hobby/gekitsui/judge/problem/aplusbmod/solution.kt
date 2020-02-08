@@ -2,6 +2,7 @@ package bluejam.hobby.gekitsui.judge.problem.aplusbmod
 
 import bluejam.hobby.gekitsui.judge.tool.JudgeSuite
 import bluejam.hobby.gekitsui.judge.tool.validator.InStream
+import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 import java.util.*
 
@@ -33,7 +34,8 @@ private fun validate(inStream: InStream) {
     inStream.expectEndOfInput()
 }
 
-val A_PLUS_B_MOD_SUITE = JudgeSuite(
+@Component
+class APlusBModJudge: JudgeSuite(
         "aplusbmod",
         ::aPlusBModCorrect,
         listOf(::aPlusBModWrong),

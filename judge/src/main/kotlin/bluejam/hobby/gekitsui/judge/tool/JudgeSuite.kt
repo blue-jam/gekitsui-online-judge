@@ -4,7 +4,7 @@ import bluejam.hobby.gekitsui.judge.tool.validator.InStream
 import bluejam.hobby.gekitsui.judge.tool.validator.InvalidFormatException
 import java.util.*
 
-class JudgeSuite(
+open class JudgeSuite(
         val problemId: String,
         private val referenceSolution: (Scanner) -> String,
         private val wrongSolutions: List<(Scanner) -> String>,

@@ -3,6 +3,7 @@ package bluejam.hobby.gekitsui.judge.problem.floydalgorithmwarshall
 import bluejam.hobby.gekitsui.judge.tool.JudgeSuite
 import bluejam.hobby.gekitsui.judge.tool.validator.InStream
 import bluejam.hobby.gekitsui.judge.tool.validator.InvalidFormatException
+import org.springframework.stereotype.Component
 import java.util.*
 import kotlin.math.min
 
@@ -95,7 +96,8 @@ private fun validate(input: InStream) {
     input.expectEndOfInput()
 }
 
-val FLOYD_ALGORITHM_WARSHALL = JudgeSuite(
+@Component
+class FloydAlgorithmWarshallJudge: JudgeSuite(
         "floyd_algorithm_warshall",
         ::correctSolution,
         listOf(::wrongSolution1, ::wrongSolution2),

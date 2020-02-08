@@ -56,4 +56,4 @@ gradle jusge:bootRun
 1. Add problem statement to [`webapp/src/main/resources/problem`](https://github.com/blue-jam/gekitsui-online-judge/tree/master/webapp/src/main/resources/problem)
 1. Add a line to create/update a row of the problem to [`ProblemConfiguration.kt`](https://github.com/blue-jam/gekitsui-online-judge/blob/master/webapp/src/main/kotlin/bluejam/hobby/gekitsui/webapp/config/ProblemConfiguration.kt)
 1. Add your wrong solution(s), correct solution, and testcase validator to [`judge` module](https://github.com/blue-jam/gekitsui-online-judge/tree/master/judge/src/main/kotlin/bluejam/hobby/gekitsui/judge/problem)
-1. Register your test suite in [`TestSuiteMap.kt`](https://github.com/blue-jam/gekitsui-online-judge/blob/master/judge/src/main/kotlin/bluejam/hobby/gekitsui/judge/problem/TestSuiteMap.kt)
+1. Create a bean which extends [`JudgeSuite`](https://github.com/blue-jam/gekitsui-online-judge/blob/master/judge/src/main/kotlin/bluejam/hobby/gekitsui/judge/tool/JudgeSuite.kt).

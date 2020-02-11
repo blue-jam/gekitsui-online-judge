@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Table(
-        uniqueConstraints = [UniqueConstraint(columnNames = ["statement"])]
+        uniqueConstraints = [UniqueConstraint(columnNames = ["name"])]
 )
 class Problem (
         @Column(unique = true) var name: String,

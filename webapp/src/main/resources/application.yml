@@ -35,6 +35,7 @@ bucket4j:
             time: 1
             unit: hours
 gekitsui:
+  admins: blue-jam
   cookie:
     user-salt: salt
   submission:

@@ -4,6 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import javax.persistence.*
 
 @Entity
+@Table(
+        uniqueConstraints = [UniqueConstraint(columnNames = ["statement"])]
+)
 class Problem (
         @Column(unique = true) var name: String,
         var title: String,
@@ -13,4 +16,5 @@ class Problem (
 
 interface ProblemRepository : JpaRepository<Problem, Long> {
     fun findByName(name: String): Problem?
+    fun removeByName(name: String)
 }

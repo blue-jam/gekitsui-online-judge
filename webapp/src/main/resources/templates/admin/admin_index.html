@@ -4,6 +4,10 @@
 <body th:insert="base :: body(~{ :: .content})">
 <div class="content container">
     <h2>管理者ページ</h2>
+    <ul>
+        <li><a th:href="@{/admin/problems}">問題一覧</a></li>
+        <li><a th:href="@{/admin/create_problem}">問題追加</a></li>
+    </ul>
 </div>
 </body>
 </html>

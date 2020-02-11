@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="base :: common_header('問題一覧')"></head>
+<body th:insert="base :: body(~{:: .content})">
+<div class="content container">
+    <h2>問題一覧 - 管理</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>問題名</th>
+            <th>タイトル</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr th:each="submission : ${submissions}">
+            <td th:text="${submission.createdDate}"></td>
+            <td><a th:href="'/problem/' + ${submission.problem.name}" th:text="${submission.problem.title}"></a></td>
+            <td th:text="${submission.author.username}"></td>
+            <td th:text="${submission.status}"></td>
+            <td><a th:href="'/submission/' + ${submission.id}">詳細</a></td>
+        </tr>
+        <tr th:each="problem : ${problems}">
+            <td th:text="${problem.name}"></td>
+            <td th:text="${problem.title}"></td>
+            <td><a th:href="@{/admin/problem/{problemName}(problemName=${problem.name})}">編集</a></td>
+            <td>
+                <form th:action="@{/admin/api/delete_problem}" method="post">
+                    <input type="hidden" name="problemName" th:value="${problem.name}"/>
+                    <button type="submit" class="btn btn-danger btn-sm">削除</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

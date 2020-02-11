@@ -9,5 +9,6 @@ spring:
   jpa:
     database: h2
 gekitsui:
+  admins: admin
   cookie:
     user-salt: salt

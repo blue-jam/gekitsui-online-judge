@@ -2,6 +2,7 @@ package bluejam.hobby.gekitsui.webapp.config
 
 import bluejam.hobby.gekitsui.webapp.entity.Problem
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
+import bluejam.hobby.gekitsui.webapp.entity.Visibility
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,7 +18,8 @@ class ProblemConfiguration {
             resourceLoader: ResourceLoader,
             problemRepository: ProblemRepository
     ) {
-        val problem = problemRepository.findByName(problemName) ?: Problem(problemName, "", "")
+        val problem = problemRepository.findByName(problemName)
+                ?: Problem(problemName, "", "", Visibility.PUBLIC, mutableSetOf())
 
         problem.title = title
         val fileUrl = resourceLoader.getResource("classpath:problem/${problemName}.md").url

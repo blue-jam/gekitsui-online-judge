@@ -10,7 +10,6 @@
             <th>問題名</th>
             <th>タイトル</th>
             <th>公開範囲</th>
-            <th>writer</th>
             <th></th>
             <th></th>
         </tr>
@@ -26,7 +25,6 @@
             <td th:text="${problem.name}"></td>
             <td th:text="${problem.title}"></td>
             <td th:text="${problem.visibility}"></td>
-            <td th:text="${problem.writers}"></td>
             <td><a th:href="@{/admin/problem/{problemName}(problemName=${problem.name})}">編集</a></td>
             <td>
                 <form th:action="@{/admin/api/delete_problem}" method="post">

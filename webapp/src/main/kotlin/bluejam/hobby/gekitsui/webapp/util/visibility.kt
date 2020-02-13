@@ -10,25 +10,15 @@ fun isAccessibleToProblem(
         principal: OAuth2AuthenticationToken?,
         problem: Problem
 ): Boolean {
-    if (problem.visibility == Visibility.PUBLIC) {
-        return true
-    }
-
     if (principal == null || principal.principal !is OAuth2User) {
-        return false
+        return problem.visibility == Visibility.PUBLIC
     }
 
     if (principal.authorities.any { it.authority == "ROLE_ADMIN" }) {
         return true
     }
 
-    val oAuth2User = principal.principal as OAuth2User
+    val gitHubId = GitHubOAuthFields.getUserId(principal.principal as OAuth2User)
 
-    if (problem.visibility == Visibility.PRIVATE) {
-        val gitHubId = GitHubOAuthFields.getUserId(oAuth2User)
-
-        return problem.writers.map { it.githubId }.contains(gitHubId)
-    }
-
-    return true
+    return problem.visibility != Visibility.PRIVATE || problem.writers.map { it.githubId }.contains(gitHubId)
 }

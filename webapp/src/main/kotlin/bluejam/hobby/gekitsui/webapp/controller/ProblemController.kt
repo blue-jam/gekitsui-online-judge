@@ -60,14 +60,16 @@ class ProblemController(
             return false
         }
 
+        if (principal.authorities.any { it.authority == "ROLE_ADMIN" }) {
+            return true
+        }
+
         val oAuth2User = principal.principal as OAuth2User
 
         if (problem.visibility == Visibility.PRIVATE) {
             val gitHubId = GitHubOAuthFields.getUserId(oAuth2User)
 
-            if (!problem.writers.map { it.githubId }.contains(gitHubId)) {
-                return false
-            }
+            return problem.writers.map { it.githubId }.contains(gitHubId)
         }
 
         return true

@@ -11,3 +11,6 @@ class UnauthorizedException(message: String): Exception(message)
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 class BadRequestException(message: String): Exception(message)
+
+@ResponseStatus(HttpStatus.FORBIDDEN)
+class ForbiddenException(message: String): Exception(message)

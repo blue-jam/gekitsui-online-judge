@@ -7,6 +7,7 @@ plugins {
 	kotlin("jvm") version "1.3.61"
 	kotlin("plugin.spring") version "1.3.61"
 	kotlin("plugin.allopen") version "1.3.61"
+    id("jacoco")
 }
 
 repositories {
@@ -22,6 +23,7 @@ subprojects {
 	apply(plugin = "org.jetbrains.kotlin.jvm")
 	apply(plugin = "org.springframework.boot")
 	apply(plugin = "io.spring.dependency-management")
+	apply(plugin = "jacoco")
 
 	java.sourceCompatibility = JavaVersion.VERSION_11
 
@@ -52,4 +54,23 @@ subprojects {
 			jvmTarget = "1.8"
 		}
 	}
+}
+
+task("codeCoverageReport", JacocoReport::class) {
+	executionData(fileTree(project.rootDir.absoluteFile).include("*/build/jacoco/*.exec"))
+
+	subprojects.forEach { project ->
+		sourceSets(project.sourceSets["main"])
+	}
+
+	reports {
+		xml.isEnabled = true
+        xml.destination = File("${buildDir}/reports/jacoco/report.xml")
+		csv.isEnabled = false
+		html.isEnabled = true
+	}
+
+	dependsOn(
+			subprojects.map { project -> project.tasks.withType<Test>() }
+	)
 }

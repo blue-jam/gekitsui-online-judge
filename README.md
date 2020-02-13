@@ -1,6 +1,7 @@
 # gekitsui-online-judge
 
 ![build](https://github.com/blue-jam/gekitsui-online-judge/workflows/build/badge.svg)
+[![codecov](https://codecov.io/gh/blue-jam/gekitsui-online-judge/branch/master/graph/badge.svg)](https://codecov.io/gh/blue-jam/gekitsui-online-judge)
 
 Online Judge to challenge/hack wrong solutions. The Online Judge is working at https://gekitsui-online-judge.herokuapp.com
 

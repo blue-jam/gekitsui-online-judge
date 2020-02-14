@@ -60,7 +60,7 @@ class InStream(private val input: String) {
 
     fun expectEndOfInput() {
         if (cursor != input.length) {
-            throw InvalidFormatException("End of input is expected. But, there are unread characters.")
+            throw InvalidFormatException("End of input is expected. But there are unread characters.")
         }
     }
 }

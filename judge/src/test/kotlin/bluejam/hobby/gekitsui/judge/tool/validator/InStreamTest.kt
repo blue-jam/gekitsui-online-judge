@@ -5,6 +5,28 @@ import org.junit.jupiter.api.Test
 
 class InStreamTest {
     @Test
+    fun `accepts only ASCII characters`() {
+        assertThrows(InvalidFormatException::class.java) { InStream("１２３ ＡＢＣ") }
+    }
+
+    @Test
+    fun `read simple integer input`() {
+        val inStream = InStream("""
+            3 4
+            5
+
+        """.trimIndent())
+
+        assertEquals(3, inStream.readInt(Int.MIN_VALUE, Int.MAX_VALUE))
+        inStream.readSpace()
+        assertEquals(4, inStream.readInt(Int.MIN_VALUE, Int.MAX_VALUE))
+        inStream.readLineFeed()
+        assertEquals(5, inStream.readInt(Int.MIN_VALUE, Int.MAX_VALUE))
+        inStream.readLineFeed()
+        inStream.expectEndOfInput()
+    }
+
+    @Test
     fun `read int value with range`() {
         val inStream = InStream("111")
         assertEquals(111, inStream.readInt(-42, 111))

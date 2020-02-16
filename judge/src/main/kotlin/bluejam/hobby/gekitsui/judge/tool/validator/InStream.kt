@@ -1,9 +1,16 @@
 package bluejam.hobby.gekitsui.judge.tool.validator
 
 import java.lang.NumberFormatException
+import java.nio.charset.Charset
 
 class InStream(private val input: String) {
     private var cursor = 0
+
+    init {
+        if (input.any { !Charset.forName("US-ASCII").newEncoder().canEncode(input) }) {
+            throw InvalidFormatException("Input contains non-ASCII character")
+        }
+    }
 
     fun readUntilNextBlank(): String {
         val nextBlankPosition = input.indexOfAny(charArrayOf(' ', '\n'), cursor)

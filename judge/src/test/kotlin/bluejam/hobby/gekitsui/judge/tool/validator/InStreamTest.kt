@@ -43,4 +43,46 @@ class InStreamTest {
         val inStream = InStream("-42")
         assertEquals(-42, inStream.readInt(-42, 123))
     }
+
+    @Test
+    fun `read space`() {
+        val inStream = InStream(" a")
+        inStream.readSpace()
+    }
+
+    @Test
+    fun `fail on read space with a wrong character`() {
+        val inStream = InStream("a")
+        assertThrows(InvalidFormatException::class.java) { inStream.readSpace() }
+    }
+
+    @Test
+    fun `fail on read space with end of input`() {
+        val inStream = InStream("")
+        assertThrows(InvalidFormatException::class.java) { inStream.readSpace() }
+    }
+
+    @Test
+    fun `expect end of input`() {
+        val inStream = InStream("")
+        inStream.expectEndOfInput()
+    }
+
+    @Test
+    fun `fail on expect end of input`() {
+        val inStream = InStream("123")
+        assertThrows(InvalidFormatException::class.java) { inStream.expectEndOfInput() }
+    }
+
+    @Test
+    fun `expect line feed`() {
+        val inStream = InStream("\n")
+        inStream.readLineFeed()
+    }
+
+    @Test
+    fun `fail on expect line feed`() {
+        val inStream = InStream("123")
+        assertThrows(InvalidFormatException::class.java) { inStream.readLineFeed() }
+    }
 }

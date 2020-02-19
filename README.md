@@ -49,7 +49,7 @@ gradle webapp:bootRun
 ### Judge worker
 
 ```shell script
-gradle jusge:bootRun
+gradle judge:bootRun
 ```
 
 ## How to add a new problem

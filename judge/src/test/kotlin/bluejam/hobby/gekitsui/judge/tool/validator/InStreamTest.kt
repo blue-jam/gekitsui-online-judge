@@ -45,6 +45,24 @@ class InStreamTest {
     }
 
     @Test
+    fun `read min int value - 1`() {
+        val inStream = InStream("-43")
+        assertThrows(InvalidFormatException::class.java) { inStream.readInt(-42, 123) }
+    }
+
+    @Test
+    fun `read max int value + 1`() {
+        val inStream = InStream("124")
+        assertThrows(InvalidFormatException::class.java) { inStream.readInt(-42, 123) }
+    }
+
+    @Test
+    fun `read too large int value`() {
+        val inStream = InStream("3000000000")
+        assertThrows(InvalidFormatException::class.java) { inStream.readInt(Int.MIN_VALUE, Int.MAX_VALUE) }
+    }
+
+    @Test
     fun `read space`() {
         val inStream = InStream(" a")
         inStream.readSpace()
@@ -75,14 +93,20 @@ class InStreamTest {
     }
 
     @Test
-    fun `expect line feed`() {
+    fun `read line feed`() {
         val inStream = InStream("\n")
         inStream.readLineFeed()
     }
 
     @Test
-    fun `fail on expect line feed`() {
+    fun `fail on read line feed with a wrong character`() {
         val inStream = InStream("123")
+        assertThrows(InvalidFormatException::class.java) { inStream.readLineFeed() }
+    }
+
+    @Test
+    fun `fail on read line feed with end of input`() {
+        val inStream = InStream("")
         assertThrows(InvalidFormatException::class.java) { inStream.readLineFeed() }
     }
 }

@@ -16,4 +16,6 @@ class Submission (
         @Id @GeneratedValue var id: Long? = null
 )
 
-interface SubmissionRepository: JpaRepository<Submission, Long>
+interface SubmissionRepository: JpaRepository<Submission, Long> {
+    fun findByProblemName(name: String): List<Submission>
+}

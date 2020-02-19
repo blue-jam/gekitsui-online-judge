@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="base :: common_header('問題投稿・更新ページ')"></head>
+<body th:insert="base :: body(~{ :: .content})">
+<div class="content container">
+    <h2>リジャッジ</h2>
+
+    <h3>問題によるリジャッジ</h3>
+    <form th:action="@{/admin/api/rejudge}" method="post">
+        <div class="form-group">
+            <label for="problem-name">問題名</label>
+            <input class="form-control" type="text" name="problemName" id="problem-name"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <hr/>
+
+    <h3>提出IDによるリジャッジ</h3>
+    <form th:action="@{/admin/api/rejudge}" method="post">
+        <div class="form-group">
+            <label for="submission-id">提出ID</label>
+            <input class="form-control" type="text" name="submissionId" id="submission-id"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

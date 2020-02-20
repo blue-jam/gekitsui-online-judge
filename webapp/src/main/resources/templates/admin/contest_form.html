@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="base :: common_header('コンテスト追加・更新ページ')"></head>
+<body th:insert="base :: body(~{ :: .content})">
+<div class="content container">
+    <h2>コンテスト追加・更新ページ</h2>
+    <form th:if="${username}" th:action="@{/admin/api/create_or_update_problem}" method="post">
+        <div class="form-group">
+            <label for="contest-name">コンテストID</label>
+            <input class="form-control" type="text" name="name" id="contest-name" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="contest-title">コンテスト名</label>
+            <input class="form-control" type="text" name="title" id="contest-title" value=""/>
+        </div>
+        <div class="form-group">
+            <label for="start-time">開始時刻</label>
+            <input class="form-control" type="datetime-local" name="start-time" id="start-time"/>
+        </div>
+        <div class="form-group">
+            <label for="end-time">終了時刻</label>
+            <input class="form-control" type="datetime-local" name="end-time" id="end-time"/>
+        </div>
+        <div class="form-group">
+            <label for="problems">問題セット（問題名をカンマ区切りで）</label>
+            <input class="form-control" type="text" name="problems" id="problems" value=""/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>

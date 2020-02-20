@@ -113,4 +113,7 @@ class AdminController(
 
         return "redirect:/admin/rejudge"
     }
+
+    @GetMapping("/contest/create")
+    fun doGetContestCreate(): String = "admin/contest_form"
 }

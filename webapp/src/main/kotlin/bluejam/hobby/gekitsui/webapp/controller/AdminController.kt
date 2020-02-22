@@ -29,7 +29,7 @@ class AdminController(
         val timeZoneConverter: TimeZoneConverter
 ) {
     @RequestMapping("/")
-    fun doGetIndex(model: Model, @AuthenticationPrincipal principal: OAuth2User): String = "admin/admin_index"
+    fun doGetIndex(model: Model): String = "admin/admin_index"
 
     @GetMapping("/problems")
     fun doGetProblems(

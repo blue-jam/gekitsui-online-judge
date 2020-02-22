@@ -49,4 +49,16 @@ class GekitsuiWebappApplicationTests {
 		mockMvc.perform(MockMvcRequestBuilders.get("/problem/wrong_problem_name"))
 				.andExpect(MockMvcResultMatchers.status().isNotFound)
 	}
+
+	@Test
+	fun `anonymous user cannot submit answer`() {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/submit"))
+				.andExpect(MockMvcResultMatchers.status().isForbidden)
+	}
+
+	@Test
+	fun `access submission page with wrong submission ID`() {
+		mockMvc.perform(MockMvcRequestBuilders.get("/submission/8192"))
+				.andExpect(MockMvcResultMatchers.status().isNotFound)
+	}
 }

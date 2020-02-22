@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th>提出時間</th>
-            <td th:text="${@timeZoneConverter.convertToLocalTime(submission.createdDate)}"></td>
+            <td th:text="${@timeZoneConverter.convertToLocalTimeString(submission.createdDate)}"></td>
         </tr>
         <tr>
             <th>ステータス</th>

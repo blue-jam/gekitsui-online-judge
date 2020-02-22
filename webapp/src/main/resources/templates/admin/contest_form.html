@@ -4,26 +4,31 @@
 <body th:insert="base :: body(~{ :: .content})">
 <div class="content container">
     <h2>コンテスト追加・更新ページ</h2>
-    <form th:if="${username}" th:action="@{/admin/api/create_or_update_problem}" method="post">
+    <form th:if="${username}" th:action="@{/admin/api/create_or_update_contest}" method="post">
+        <input type="hidden" name="id" th:value="${contest} ? ${contest.id}"/>
         <div class="form-group">
             <label for="contest-name">コンテストID</label>
-            <input class="form-control" type="text" name="name" id="contest-name" value=""/>
+            <input class="form-control" type="text" name="name" id="contest-name"
+                   th:value="${contest} ? ${contest.name}" th:readonly="${contest}"/>
         </div>
         <div class="form-group">
             <label for="contest-title">コンテスト名</label>
-            <input class="form-control" type="text" name="title" id="contest-title" value=""/>
+            <input class="form-control" type="text" name="title" id="contest-title"
+                   th:value="${contest} ? ${contest.title}"/>
         </div>
         <div class="form-group">
             <label for="start-time">開始時刻</label>
-            <input class="form-control" type="datetime-local" name="start-time" id="start-time"/>
+            <input class="form-control" type="datetime-local" name="startTime" id="start-time"
+                   th:value="${startTime} ? ${startTime}"/>
         </div>
         <div class="form-group">
             <label for="end-time">終了時刻</label>
-            <input class="form-control" type="datetime-local" name="end-time" id="end-time"/>
+            <input class="form-control" type="datetime-local" name="endTime" id="end-time"
+                   th:value="${endTime} ? ${endTime}"/>
         </div>
         <div class="form-group">
-            <label for="problems">問題セット（問題名をカンマ区切りで）</label>
-            <input class="form-control" type="text" name="problems" id="problems" value=""/>
+            <label for="problem-names">問題セット（問題名をカンマ区切りで）</label>
+            <input class="form-control" type="text" name="problemNames" id="problem-names" th:value="${problemNames} ? ${problemNames}"/>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

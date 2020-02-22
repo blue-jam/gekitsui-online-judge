@@ -15,7 +15,15 @@ class TimeZoneConverter(
     private val zoneId: ZoneId = ZoneId.of(timeZoneName)
     private val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern(pattern)
 
-    fun convertToLocalTime(timestamp: Timestamp): String {
-        return LocalDateTime.ofInstant(timestamp.toInstant(), zoneId).format(dateTimeFormatter)
+    fun convertToLocalTimeString(timestamp: Timestamp): String =
+        convertToLocalDateTime(timestamp).format(dateTimeFormatter)
+
+    fun convertToLocalDateTime(timestamp: Timestamp): LocalDateTime =
+            LocalDateTime.ofInstant(timestamp.toInstant(), zoneId)
+
+    fun convertToServerTimestamp(localDateTime: LocalDateTime): Timestamp {
+        val zonedDateTime = localDateTime.atZone(zoneId)
+
+        return Timestamp(zonedDateTime.toEpochSecond() * 1000L)
     }
 }

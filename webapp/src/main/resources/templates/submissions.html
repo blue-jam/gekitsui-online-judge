@@ -15,7 +15,7 @@
         </tr>
         </thead>
         <tr th:each="submission : ${submissions}">
-            <td th:text="${@timeZoneConverter.convertToLocalTime(submission.createdDate)}"></td>
+            <td th:text="${@timeZoneConverter.convertToLocalTimeString(submission.createdDate)}"></td>
             <td><a th:href="'/problem/' + ${submission.problem.name}" th:text="${submission.problem.title}"></a></td>
             <td th:text="${submission.author.username}"></td>
             <td th:text="${submission.status}"></td>

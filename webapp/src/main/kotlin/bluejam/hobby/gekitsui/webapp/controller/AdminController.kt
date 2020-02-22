@@ -3,15 +3,19 @@ package bluejam.hobby.gekitsui.webapp.controller
 import bluejam.hobby.gekitsui.webapp.GekitsuiWebappApplication
 import bluejam.hobby.gekitsui.webapp.entity.*
 import bluejam.hobby.gekitsui.webapp.repository.UserRepository
+import bluejam.hobby.gekitsui.webapp.service.TimeZoneConverter
 import bluejam.hobby.gekitsui.webapp.util.GitHubOAuthFields
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.data.domain.Sort
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.transaction.Transactional
 
 @Controller
@@ -20,7 +24,9 @@ class AdminController(
         val userRepository: UserRepository,
         val problemRepository: ProblemRepository,
         val submissionRepository: SubmissionRepository,
-        val rabbitTemplate: RabbitTemplate
+        val contestRepository: ContestRepository,
+        val rabbitTemplate: RabbitTemplate,
+        val timeZoneConverter: TimeZoneConverter
 ) {
     @RequestMapping("/")
     fun doGetIndex(model: Model, @AuthenticationPrincipal principal: OAuth2User): String = "admin/admin_index"
@@ -114,6 +120,56 @@ class AdminController(
         return "redirect:/admin/rejudge"
     }
 
-    @GetMapping("/contest/create")
+    @GetMapping("/create_contest")
     fun doGetContestCreate(): String = "admin/contest_form"
+
+    @GetMapping("/contest/{contestName}")
+    fun contestForm(
+            model: Model,
+            @PathVariable contestName: String
+    ): String {
+        val contest = contestRepository.findByName(contestName) ?: throw BadRequestException("There is no problem with name = $contestName")
+
+        model["contest"] = contest
+        model["problemNames"] = contest.problemSet.joinToString(", ") { it.name }
+        model["startTime"] = DateTimeFormatter.ISO_DATE_TIME.format(timeZoneConverter.convertToLocalDateTime(contest.startTime))
+        model["endTime"] = DateTimeFormatter.ISO_DATE_TIME.format(timeZoneConverter.convertToLocalDateTime(contest.endTime))
+
+        return "admin/contest_form"
+    }
+
+    @PostMapping("/api/create_or_update_contest")
+    fun createOrUpdateContest(
+            @RequestParam(required = false) id: Long?,
+            @RequestParam name: String,
+            @RequestParam title: String,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) startTime: LocalDateTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) endTime: LocalDateTime,
+            @RequestParam problemNames: String
+    ): String {
+        val contest: Contest
+
+        val startTimestamp = timeZoneConverter.convertToServerTimestamp(startTime)
+        val endTimestamp = timeZoneConverter.convertToServerTimestamp(endTime)
+        val problemSet = problemNames.split(",").map {
+            val problemName = it.trim()
+
+            problemRepository.findByName(problemName) ?: throw BadRequestException("There is no problem with name = $problemName")
+        }.toMutableList()
+
+        if (id == null) {
+            contest = Contest(name, title, startTimestamp, endTimestamp, problemSet)
+        } else {
+            contest = contestRepository.findById(id).orElseThrow { throw BadRequestException("There is no contest with ID = $id") }
+            contest.name = name
+            contest.title = title
+            contest.startTime = startTimestamp
+            contest.endTime = endTimestamp
+            contest.problemSet = problemSet
+        }
+
+        contestRepository.save(contest)
+
+        return "redirect:/admin/contest/$name"
+    }
 }

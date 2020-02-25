@@ -57,6 +57,12 @@ class GekitsuiWebappApplicationTests {
 	}
 
 	@Test
+	fun `logged in user cannot submit answer without CSRF token`() {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/submit"))
+				.andExpect(MockMvcResultMatchers.status().isForbidden)
+	}
+
+	@Test
 	fun `access submission page with wrong submission ID`() {
 		mockMvc.perform(MockMvcRequestBuilders.get("/submission/8192"))
 				.andExpect(MockMvcResultMatchers.status().isNotFound)

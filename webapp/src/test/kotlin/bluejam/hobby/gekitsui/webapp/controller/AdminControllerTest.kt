@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -49,6 +50,12 @@ internal class AdminControllerTest {
     }
 
     @Test
+    fun `admin can access problem page with wrong problem name`() {
+        mockMvc.perform(MockMvcRequestBuilders.get("/admin/problem/wrong_name"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
+    }
+
+    @Test
     fun `admin can access create problem page`() {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/create_problem"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
@@ -61,5 +68,13 @@ internal class AdminControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin/rejudge"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.view().name("admin/rejudge"))
+    }
+
+    @Test
+    fun `bad request for rejudge API endpoint`() {
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/admin/api/rejudge").with(SecurityMockMvcRequestPostProcessors.csrf())
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
     }
 }

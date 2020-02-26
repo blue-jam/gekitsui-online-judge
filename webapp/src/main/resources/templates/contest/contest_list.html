@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common_header(title='コンテスト一覧', links=~{:: link})"></head>
+<body th:insert="base :: body(content=~{:: .content}, scripts=~{:: script})">
+<div class="content container">
+    <h2 class="mb-4">コンテスト一覧</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>開始時間</th>
+            <th>終了時間</th>
+            <th>問題数</th>
+        </tr>
+        </thead>
+        <tr th:each="contest : ${contests}">
+            <td><a th:href="@{/contest/{name}(name=${contest.name})}">[[${contest.title}]]</a></td>
+            <td>[[${@timeZoneConverter.convertToLocalTimeString(contest.startTime)}]]</td>
+            <td>[[${@timeZoneConverter.convertToLocalTimeString(contest.endTime)}]]</td>
+            <td>[[${#lists.size(contest.problemSet)}]]</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

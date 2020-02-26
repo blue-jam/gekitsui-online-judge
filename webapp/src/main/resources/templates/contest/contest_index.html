@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common_header(title=${contest.title}, links=~{:: link})"></head>
+<body th:insert="base :: body(content=~{:: .content}, scripts=~{:: script})">
+<div class="content container">
+    <h2 class="mb-4">[[${contest.title}]]</h2>
+    <p th:unless="${username}">コンテストに参加するためには<a th:href="@{/login}">ログイン</a>してください。</p>
+</div>
+</body>
+</html>

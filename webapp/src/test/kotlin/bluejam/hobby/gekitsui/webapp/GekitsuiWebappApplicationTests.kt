@@ -51,12 +51,6 @@ class GekitsuiWebappApplicationTests {
 	}
 
 	@Test
-	fun `anonymous user cannot submit answer`() {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/submit"))
-				.andExpect(MockMvcResultMatchers.status().isForbidden)
-	}
-
-	@Test
 	fun `logged in user cannot submit answer without CSRF token`() {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/submit"))
 				.andExpect(MockMvcResultMatchers.status().isForbidden)

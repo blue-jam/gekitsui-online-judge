@@ -21,7 +21,7 @@ class ContestController(
         return "contest/contest_list"
     }
 
-    @GetMapping("/contest/{name}")
+    @GetMapping(value = ["/contest/{name}", "/contest/{name}/**"])
     fun index(
             @PathVariable name: String,
             model: Model

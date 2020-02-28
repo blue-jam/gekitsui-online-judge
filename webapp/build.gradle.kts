@@ -1,5 +1,6 @@
 plugins {
     kotlin("plugin.spring")
+    id("com.moowork.node")
 }
 
 dependencies {

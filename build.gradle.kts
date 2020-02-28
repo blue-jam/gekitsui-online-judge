@@ -8,6 +8,7 @@ plugins {
 	kotlin("plugin.spring") version "1.3.61"
 	kotlin("plugin.allopen") version "1.3.61"
     id("jacoco")
+	id("com.moowork.node") version "1.3.1" apply false
 }
 
 repositories {

@@ -1,8 +1,9 @@
 import React from 'react';
 import {NavLink, Route, Switch, useRouteMatch} from 'react-router-dom';
 import classNames from "classnames";
-import {Contest, Problem} from "../models";
+import {Contest} from "../models";
 import ProblemsTab from "./ProblemsTab";
+import ProblemTab from "./ProblemTab";
 
 interface Props {
     contest: Contest
@@ -32,6 +33,9 @@ const ContestPage: React.FunctionComponent<Props> = ({contest}) => {
                     </Route>
                     <Route exact path={`${match.path}/problem`}>
                         <ProblemsTab problemSet={contest.problemSet}/>
+                    </Route>
+                    <Route path={`${match.path}/problem/:name`}>
+                        <ProblemTab contest={contest}/>
                     </Route>
                 </Switch>
             </div>

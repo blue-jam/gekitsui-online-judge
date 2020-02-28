@@ -1,6 +1,7 @@
 export interface Problem {
     name: string;
     title: string;
+    statement: string;
 }
 
 export interface Contest {

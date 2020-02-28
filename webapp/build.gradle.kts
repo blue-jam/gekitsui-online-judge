@@ -28,3 +28,18 @@ dependencies {
     testImplementation("com.ninja-squad:springmockk:2.0.0")
     testImplementation("com.h2database:h2")
 }
+
+node {
+    version = "12.x"
+    npmVersion = "6.x"
+}
+
+tasks {
+    npmInstall {
+        dependsOn("nodeSetup", "npmSetup")
+    }
+
+    bootJar {
+        dependsOn("npm_run_build")
+    }
+}

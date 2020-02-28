@@ -14,9 +14,10 @@ const ProblemTab: React.FunctionComponent<Props> = ({contest}) => {
     const problem = contest.problemSet.find((problem) => problem.name === name);
 
     useEffect(() => {
-        // @ts-ignore
-        hljs.initHighlighting.called = false;
         hljs.initHighlighting();
+
+        // @ts-ignore
+        return () => hljs.initHighlighting = false;
     });
 
     return (

@@ -38,7 +38,5 @@ module.exports = (env, argv) => {
         config.output.path = path.join(__dirname, 'build', 'resources', 'main')
     }
 
-    console.log(config);
-
     return config;
 };

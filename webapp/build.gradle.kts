@@ -39,6 +39,10 @@ tasks {
         dependsOn("nodeSetup", "npmSetup")
     }
 
+    named("npm_run_build") {
+        dependsOn("npm_run_lint")
+    }
+
     bootJar {
         dependsOn("npm_run_build")
     }

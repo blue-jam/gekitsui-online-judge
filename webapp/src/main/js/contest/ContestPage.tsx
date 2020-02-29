@@ -1,9 +1,9 @@
-import React from "react";
-import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
-import classNames from "classnames";
-import { Contest } from "../models";
-import ProblemsTab from "./ProblemsTab";
-import ProblemTab from "./ProblemTab";
+import React from 'react';
+import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
+import classNames from 'classnames';
+import { Contest } from '../models';
+import ProblemsTab from './ProblemsTab';
+import ProblemTab from './ProblemTab';
 
 interface Props {
   contest: Contest;
@@ -16,11 +16,11 @@ const ContestPage: React.FunctionComponent<Props> = ({ contest }) => {
     <React.Fragment>
       <nav
         className={classNames(
-          "navbar",
-          "navbar-expand-lg",
-          "navbar-light",
-          "bg-light",
-          "mb-4"
+          'navbar',
+          'navbar-expand-lg',
+          'navbar-light',
+          'bg-light',
+          'mb-4'
         )}
       >
         <span className="navbar-brand">{contest.title}</span>

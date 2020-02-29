@@ -1,19 +1,19 @@
-import React, { ReactElement, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import marked from "marked";
-import { Contest } from "../models";
-import hljs from "highlight.js";
-import "highlight.js/styles/default.css";
+import React, { ReactElement, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import marked from 'marked';
+import { Contest } from '../models';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/default.css';
 // @ts-ignore
-import { MathJax } from "mathjax3/mathjax3/mathjax";
+import { MathJax } from 'mathjax3/mathjax3/mathjax';
 // @ts-ignore
-import { RegisterHTMLHandler } from "mathjax3/mathjax3/handlers/html";
+import { RegisterHTMLHandler } from 'mathjax3/mathjax3/handlers/html';
 // @ts-ignore
-import { browserAdaptor } from "mathjax3/mathjax3/adaptors/browserAdaptor";
+import { browserAdaptor } from 'mathjax3/mathjax3/adaptors/browserAdaptor';
 // @ts-ignore
-import { CHTML } from "mathjax3/mathjax3/output/chtml";
+import { CHTML } from 'mathjax3/mathjax3/output/chtml';
 // @ts-ignore
-import { TeX } from "mathjax3/mathjax3/input/tex";
+import { TeX } from 'mathjax3/mathjax3/input/tex';
 
 interface Props {
   contest: Contest;
@@ -34,7 +34,7 @@ const ProblemTab: React.FunctionComponent<Props> = ({
       InputJax: new TeX(),
       OutputJax: new CHTML({
         fontURL:
-          "https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2"
+          'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
       })
     });
     MathJaxDocument.findMath()

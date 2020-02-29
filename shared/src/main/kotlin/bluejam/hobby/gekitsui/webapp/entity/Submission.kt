@@ -18,4 +18,5 @@ class Submission (
 
 interface SubmissionRepository: JpaRepository<Submission, Long> {
     fun findByProblemName(name: String): List<Submission>
+    fun findByAuthorUsernameOrderByIdDesc(username: String): List<Submission>
 }

@@ -6,6 +6,7 @@ import { Contest } from './models';
 
 declare global {
   let contest: Contest;
+  let username: string;
 }
 
 class App extends React.Component<{}> {

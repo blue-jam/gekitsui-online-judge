@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { Contest } from '../models';
 import ProblemsTab from './ProblemsTab';
 import ProblemTab from './ProblemTab';
+import SubmissionTab from './SubmissionTab';
+import SubmissionsTab from './SubmissionsTab';
 
 interface Props {
   contest: Contest;
@@ -46,6 +48,15 @@ const ContestPage: React.FunctionComponent<Props> = ({ contest }) => {
               問題
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              activeClassName="active"
+              to={`${match.path}/submission`}
+            >
+              提出履歴
+            </NavLink>
+          </li>
         </ul>
         <Switch>
           <Route exact path={match.path}>
@@ -56,6 +67,12 @@ const ContestPage: React.FunctionComponent<Props> = ({ contest }) => {
           </Route>
           <Route path={`${match.path}/problem/:name`}>
             <ProblemTab contest={contest} />
+          </Route>
+          <Route path={`${match.path}/submission/:id`}>
+            <SubmissionTab contestPath={match.path} />
+          </Route>
+          <Route path={`${match.path}/submission`}>
+            <SubmissionsTab contestPath={match.path} username={username} />
           </Route>
         </Switch>
       </div>

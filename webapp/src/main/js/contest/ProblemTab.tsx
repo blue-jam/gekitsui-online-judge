@@ -17,7 +17,7 @@ const ProblemTab: React.FunctionComponent<Props> = ({contest}) => {
         hljs.initHighlighting();
 
         // @ts-ignore
-        return () => hljs.initHighlighting = false;
+        return () => hljs.initHighlighting.called = false;
     });
 
     return (

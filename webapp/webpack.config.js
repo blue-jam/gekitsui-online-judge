@@ -32,7 +32,7 @@ module.exports = (env, argv) => {
                 },
             ]
         },
-        "resolve": {
+        resolve: {
             extensions: ['.tsx', '.ts', '.js']
         }
     };

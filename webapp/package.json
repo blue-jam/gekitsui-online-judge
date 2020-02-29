@@ -14,6 +14,7 @@
     "classnames": "^2.2.6",
     "highlight.js": "^9.18.1",
     "marked": "^0.8.0",
+    "mathjax3": "^3.0.0-beta.4",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",

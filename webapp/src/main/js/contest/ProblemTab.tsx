@@ -14,6 +14,7 @@ import { browserAdaptor } from 'mathjax3/mathjax3/adaptors/browserAdaptor';
 import { CHTML } from 'mathjax3/mathjax3/output/chtml';
 // @ts-ignore
 import { TeX } from 'mathjax3/mathjax3/input/tex';
+import Cookies from 'js-cookie';
 
 interface Props {
   contest: Contest;
@@ -51,6 +52,18 @@ const ProblemTab: React.FunctionComponent<Props> = ({
     <React.Fragment>
       <h3 className="mb-4">{problem.title}</h3>
       <div dangerouslySetInnerHTML={{ __html: marked(problem.statement) }} />
+      <hr />
+      <form action="/api/submit" method="post">
+        <input type="hidden" name="problemName" value={problem.name} />
+        <input type="hidden" name="_csrf" value={Cookies.get('XSRF-TOKEN')} />
+        <div className="form-group">
+          <label htmlFor="testcase">テストケース</label>
+          <textarea className="form-control" name="testcase" id="testcase" />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
     </React.Fragment>
   );
 };

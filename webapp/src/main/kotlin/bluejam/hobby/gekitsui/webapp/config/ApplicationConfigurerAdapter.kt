@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 
 @EnableWebSecurity
 class ApplicationConfigurerAdapter : WebSecurityConfigurerAdapter() {
@@ -22,6 +23,8 @@ class ApplicationConfigurerAdapter : WebSecurityConfigurerAdapter() {
         http.oauth2Login()
                 .userInfoEndpoint()
                     .userAuthoritiesMapper(userAuthoritiesMapper())
+
+        http.csrf { it.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) }
 
         http.authorizeRequests {
             it.antMatchers(

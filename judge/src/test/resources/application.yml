@@ -1,0 +1,5 @@
+spring:
+  jpa:
+    database: h2
+  rabbitmq:
+    addresses: ${CLOUDAMQP_URL:amqp://guest:guest@localhost}

@@ -25,6 +25,7 @@ dependencies {
         exclude(module = "mockito-core")
     }
     testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.springframework.amqp:spring-rabbit-test")
     testImplementation("com.ninja-squad:springmockk:2.0.0")
     testImplementation("com.h2database:h2")
 }

@@ -8,7 +8,7 @@ import javax.persistence.*
 @Table(
         uniqueConstraints = [UniqueConstraint(columnNames = ["name"])]
 )
-data class Contest (
+class Contest (
         @Column(unique = true) var name: String,
         var title: String,
         var startTime: Timestamp,

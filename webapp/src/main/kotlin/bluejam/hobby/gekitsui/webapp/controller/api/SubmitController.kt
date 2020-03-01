@@ -18,8 +18,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 
-data class SubmissionPayload (val problemName: String, val testcase: String)
+data class SubmissionPayload(val problemName: String, val testcase: String)
 
 @Controller
 class SubmitController(
@@ -31,6 +32,7 @@ class SubmitController(
 ) {
     @PostMapping("/api/submit")
     fun post(
+            @RequestParam(required = false) contestName: String?,
             @ModelAttribute submissionPayload: SubmissionPayload,
             @AuthenticationPrincipal principal: OAuth2AuthenticationToken
     ): String {
@@ -72,6 +74,10 @@ class SubmitController(
                 submissionId.toString()
         )
 
-        return "redirect:/submission/${submission.id}"
+        return if (contestName == null) {
+            "redirect:/submission/${submission.id}"
+        } else {
+            "redirect:/contest/${contestName}/submission/${submission.id}"
+        }
     }
 }

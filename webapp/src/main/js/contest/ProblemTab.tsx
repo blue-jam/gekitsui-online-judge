@@ -53,7 +53,7 @@ const ProblemTab: React.FunctionComponent<Props> = ({
       <h3 className="mb-4">{problem.title}</h3>
       <div dangerouslySetInnerHTML={{ __html: marked(problem.statement) }} />
       <hr />
-      <form action="/api/submit" method="post">
+      <form action={`/api/submit?contestName=${contest.name}`} method="post">
         <input type="hidden" name="problemName" value={problem.name} />
         <input type="hidden" name="_csrf" value={Cookies.get('XSRF-TOKEN')} />
         <div className="form-group">

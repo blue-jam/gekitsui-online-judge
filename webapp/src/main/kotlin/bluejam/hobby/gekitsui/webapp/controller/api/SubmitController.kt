@@ -4,6 +4,7 @@ import bluejam.hobby.gekitsui.judge.tool.JudgeStatus
 import bluejam.hobby.gekitsui.webapp.GekitsuiWebappApplication
 import bluejam.hobby.gekitsui.webapp.controller.BadRequestException
 import bluejam.hobby.gekitsui.webapp.controller.ForbiddenException
+import bluejam.hobby.gekitsui.webapp.controller.ServiceUnavailableException
 import bluejam.hobby.gekitsui.webapp.controller.UnauthorizedException
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
 import bluejam.hobby.gekitsui.webapp.entity.Submission
@@ -44,11 +45,9 @@ class SubmitController(
         val githubId = oAuth2User.name?.toInt() ?: return "redirect:/"
 
         val user = userRepository.findByGithubId(githubId)
+                ?: throw UnauthorizedException("The user with name = $githubId has not signed up")
         val problem = problemRepository.findByName(submissionPayload.problemName)
-
-        if (user == null || problem == null) {
-            throw UnauthorizedException("The user with name = $githubId has not signed up")
-        }
+                ?: throw BadRequestException("There is no problem with name = ${submissionPayload.problemName}")
 
         if (!isAccessibleToProblem(principal, problem)) {
             throw ForbiddenException("The user doesn't have permission to see the problem")
@@ -66,7 +65,7 @@ class SubmitController(
                 testcase,
                 JudgeStatus.WAITING_JUDGE
         ))
-        val submissionId = submission.id ?: throw Exception("Submission ID is null.")
+        val submissionId = submission.id ?: throw ServiceUnavailableException("Submission ID is null.")
 
         rabbitTemplate.convertAndSend(
                 GekitsuiWebappApplication.TOPIC_EXCHANGE_NAME,

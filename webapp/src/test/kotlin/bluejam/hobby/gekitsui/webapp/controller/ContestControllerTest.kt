@@ -3,12 +3,12 @@ package bluejam.hobby.gekitsui.webapp.controller
 import bluejam.hobby.gekitsui.webapp.entity.Contest
 import bluejam.hobby.gekitsui.webapp.entity.ContestRepository
 import bluejam.hobby.gekitsui.webapp.entity.Problem
-import bluejam.hobby.gekitsui.webapp.entity.Visibility
+import bluejam.hobby.gekitsui.webapp.entity.User
 import bluejam.hobby.gekitsui.webapp.test.util.WithGitHubUser
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -45,20 +45,72 @@ internal class ContestControllerTest(@Autowired val mockMvc: MockMvc) {
     }
 
     @Test
-    fun `show contest page`() {
-        val contest = Contest(
+    fun `Non-participant can see problem set of finished contest`() {
+        val contest = spyk(Contest(
                 "name",
                 "title",
                 Timestamp.valueOf("2020-02-26 23:00:00"),
                 Timestamp.valueOf("2020-02-26 23:30:00"),
-                mutableListOf(),
-                mutableSetOf()
-        )
+                problemSet = mutableListOf(),
+                contestants = mutableSetOf()
+        ))
 
         every { contestRepository.findByName("name") } returns contest
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/contest/name"))
-                .andExpect(MockMvcResultMatchers.status().isOk)
+        mockMvc.get("/contest/name").andExpect {
+            status { isOk }
+            model {
+                attribute("contest", contest)
+            }
+        }
+
+        verify(exactly = 0) { contest setProperty "problemSet" value any<MutableList<Problem>>() }
+    }
+
+    @Test
+    fun `Non-participant cannot see problem set during contest`() {
+        val contest = spyk(Contest(
+                "name",
+                "title",
+                Timestamp.valueOf("2020-02-26 23:00:00"),
+                Timestamp.valueOf("3020-02-26 23:30:00"),
+                problemSet = mutableListOf(),
+                contestants = mutableSetOf()
+        ))
+
+        every { contestRepository.findByName("name") } returns contest
+
+        mockMvc.get("/contest/name").andExpect {
+            status { isOk }
+            model {
+                attribute("contest", contest)
+            }
+        }
+
+        verify { contest setProperty "problemSet" value mutableListOf<Problem>() }
+    }
+
+    @Test
+    fun `Participant can see problem set during contest`() {
+        val contest = spyk(Contest(
+                "name",
+                "title",
+                Timestamp.valueOf("2020-02-26 23:00:00"),
+                Timestamp.valueOf("3020-02-26 23:30:00"),
+                problemSet = mutableListOf(),
+                contestants = mutableSetOf(User("username", githubId = 123))
+        ))
+
+        every { contestRepository.findByName("name") } returns contest
+
+        mockMvc.get("/contest/name").andExpect {
+            status { isOk }
+            model {
+                attribute("contest", contest)
+            }
+        }
+
+        verify(exactly = 0) { contest setProperty "problemSet" value any<MutableList<Problem>>() }
     }
 
     @Test

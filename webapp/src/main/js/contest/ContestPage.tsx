@@ -13,6 +13,7 @@ interface Props {
 
 const ContestPage: React.FunctionComponent<Props> = ({ contest }) => {
   const match = useRouteMatch();
+  const hasStarted = contest.problemSet.length > 0;
 
   return (
     <React.Fragment>
@@ -39,41 +40,50 @@ const ContestPage: React.FunctionComponent<Props> = ({ contest }) => {
               トップ
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink
-              className="nav-link"
-              activeClassName="active"
-              to={`${match.path}/problem`}
-            >
-              問題
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              className="nav-link"
-              activeClassName="active"
-              to={`${match.path}/submission`}
-            >
-              提出履歴
-            </NavLink>
-          </li>
+          {hasStarted && (
+            <React.Fragment>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={`${match.path}/problem`}
+                >
+                  問題
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link"
+                  activeClassName="active"
+                  to={`${match.path}/submission`}
+                >
+                  提出履歴
+                </NavLink>
+              </li>
+            </React.Fragment>
+          )}
         </ul>
         <Switch>
           <Route exact path={match.path}>
             <h2 className="mb-4">{contest.title}</h2>
           </Route>
-          <Route exact path={`${match.path}/problem`}>
-            <ProblemsTab problemSet={contest.problemSet} />
-          </Route>
-          <Route path={`${match.path}/problem/:name`}>
-            <ProblemTab contest={contest} />
-          </Route>
-          <Route path={`${match.path}/submission/:id`}>
-            <SubmissionTab contestPath={match.path} />
-          </Route>
-          <Route path={`${match.path}/submission`}>
-            <SubmissionsTab contestPath={match.path} username={username} />
-          </Route>
+          {hasStarted && (
+            <React.Fragment>
+              <Route exact path={`${match.path}/problem`}>
+                <ProblemsTab problemSet={contest.problemSet} />
+              </Route>
+              <Route path={`${match.path}/problem/:name`}>
+                <ProblemTab contest={contest} />
+              </Route>
+              <Route path={`${match.path}/submission/:id`}>
+                <SubmissionTab contestPath={match.path} />
+              </Route>
+              <Route exact path={`${match.path}/submission`}>
+                <SubmissionsTab contestPath={match.path} username={username} />
+              </Route>
+            </React.Fragment>
+          )}
+          <Route path={match.path}>Not Found</Route>
         </Switch>
       </div>
     </React.Fragment>

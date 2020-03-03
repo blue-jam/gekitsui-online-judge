@@ -2,22 +2,27 @@ package bluejam.hobby.gekitsui.webapp.controller
 
 import bluejam.hobby.gekitsui.webapp.entity.Contest
 import bluejam.hobby.gekitsui.webapp.entity.ContestRepository
+import bluejam.hobby.gekitsui.webapp.entity.Problem
+import bluejam.hobby.gekitsui.webapp.entity.Visibility
+import bluejam.hobby.gekitsui.webapp.test.util.WithGitHubUser
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
+import org.hamcrest.MatcherAssert
+import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.domain.Sort
-import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import java.sql.Timestamp
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser("user", roles = ["USER"])
+@WithGitHubUser(username = "user", githubId = 123)
 internal class ContestControllerTest(@Autowired val mockMvc: MockMvc) {
     @MockkBean
     private lateinit var contestRepository: ContestRepository

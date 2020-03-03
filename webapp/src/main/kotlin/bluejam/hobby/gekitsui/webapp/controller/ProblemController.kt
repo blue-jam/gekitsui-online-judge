@@ -2,7 +2,7 @@ package bluejam.hobby.gekitsui.webapp.controller
 
 import bluejam.hobby.gekitsui.webapp.entity.Problem
 import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
-import bluejam.hobby.gekitsui.webapp.util.isAccessibleToProblem
+import bluejam.hobby.gekitsui.webapp.util.checkIsAccessibleToProblem
 import org.springframework.data.domain.Sort
 import org.springframework.data.domain.Sort.Direction
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -26,7 +26,7 @@ class ProblemController(
         val problem: Problem = problemRepository.findByName(problemName)
                 ?: throw NotFoundException("There is no problem with name = $problemName")
 
-        if (!isAccessibleToProblem(principal, problem)) {
+        if (!checkIsAccessibleToProblem(principal, problem)) {
             throw ForbiddenException("The user doesn't have permission to see the problem.")
         }
 
@@ -41,7 +41,7 @@ class ProblemController(
             @AuthenticationPrincipal principal: OAuth2AuthenticationToken?
     ): String {
         model["problems"] = problemRepository.findAll(Sort.by(Direction.ASC, "id"))
-                .filter { isAccessibleToProblem(principal, it) }
+                .filter { checkIsAccessibleToProblem(principal, it) }
 
         return "problems"
     }

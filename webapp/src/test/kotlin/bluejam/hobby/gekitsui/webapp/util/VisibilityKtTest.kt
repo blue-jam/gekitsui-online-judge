@@ -15,7 +15,7 @@ internal class VisibilityKtTest {
 
     @Test
     fun `Anonymous user can see public problem`() {
-        assertTrue(isAccessibleToProblem(
+        assertTrue(checkIsAccessibleToProblem(
                 principal = null,
                 problem = problem(Visibility.PUBLIC)
         ))
@@ -23,7 +23,7 @@ internal class VisibilityKtTest {
 
     @Test
     fun `Anonymous user cannot see non-public problem`() {
-        assertFalse(isAccessibleToProblem(
+        assertFalse(checkIsAccessibleToProblem(
                 principal = null,
                 problem = problem(Visibility.PRIVATE)
         ))
@@ -31,17 +31,17 @@ internal class VisibilityKtTest {
 
     @Test
     fun `User cannot see private problem`() {
-        assertFalse(isAccessibleToProblem(principal(gitHubId = writerId + 10), problem(Visibility.PRIVATE)))
+        assertFalse(checkIsAccessibleToProblem(principal(gitHubId = writerId + 10), problem(Visibility.PRIVATE)))
     }
 
     @Test
     fun `Writer can see their private problem`() {
-        assertTrue(isAccessibleToProblem(principal(gitHubId = writerId), problem(Visibility.PRIVATE)))
+        assertTrue(checkIsAccessibleToProblem(principal(gitHubId = writerId), problem(Visibility.PRIVATE)))
     }
 
     @Test
     fun `Admin can see any private problem`() {
-        assertTrue(isAccessibleToProblem(
+        assertTrue(checkIsAccessibleToProblem(
                 principal(gitHubId = writerId + 10, authorityNames = listOf("ROLE_ADMIN")),
                 problem(Visibility.PRIVATE)
         ))

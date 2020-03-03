@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User
 
 
-fun isAccessibleToProblem(
+fun checkIsAccessibleToProblem(
         principal: OAuth2AuthenticationToken?,
         problem: Problem
 ): Boolean {

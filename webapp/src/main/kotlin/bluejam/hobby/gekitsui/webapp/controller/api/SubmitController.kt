@@ -10,7 +10,7 @@ import bluejam.hobby.gekitsui.webapp.entity.ProblemRepository
 import bluejam.hobby.gekitsui.webapp.entity.Submission
 import bluejam.hobby.gekitsui.webapp.entity.SubmissionRepository
 import bluejam.hobby.gekitsui.webapp.repository.UserRepository
-import bluejam.hobby.gekitsui.webapp.util.isAccessibleToProblem
+import bluejam.hobby.gekitsui.webapp.util.checkIsAccessibleToProblem
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -49,7 +49,7 @@ class SubmitController(
         val problem = problemRepository.findByName(submissionPayload.problemName)
                 ?: throw BadRequestException("There is no problem with name = ${submissionPayload.problemName}")
 
-        if (!isAccessibleToProblem(principal, problem)) {
+        if (!checkIsAccessibleToProblem(principal, problem)) {
             throw ForbiddenException("The user doesn't have permission to see the problem")
         }
 

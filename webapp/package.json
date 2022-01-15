@@ -15,7 +15,7 @@
     "classnames": "^2.2.6",
     "highlight.js": "^10.4.1",
     "js-cookie": "^2.2.1",
-    "marked": "^0.8.2",
+    "marked": "^4.0.10",
     "mathjax3": "^3.0.0-beta.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
